@@ -1,0 +1,1 @@
+Set the course that it is in draft state, pending approval stage and it requires atleast one admin aproval to publish it
