@@ -40,7 +40,7 @@ function Navbar() {
 
     return (
         <div
-            className={`flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700 ${location.pathname !== "/" ? "bg-richblack-800" : ""
+            className={`flex h-14 items-center justify-center border-b-[1px] border-b-[#2C333F] ${location.pathname !== "/" ? "bg-[#161D29]" : ""
                 } transition-all duration-200`}
         >
             <div className="flex w-11/12 max-w-maxContent items-center justify-between">
@@ -50,42 +50,42 @@ function Navbar() {
                 </Link>
                 {/* Navigation links */}
                 <nav className="hidden md:block">
-                    <ul className="flex gap-x-6 text-richblack-25">
+                    <ul className="flex gap-x-6 text-[#DBDDEA]">
                         {NavbarLinks.map((link, index) => (
                             <li key={index}>
                                 {link.title === "Catalog" ? (
                                     <>
                                         <div
-                                            className={`group relative flex cursor-pointer items-center gap-1 ${matchRoute("/catalog/:catalogName")
-                                                ? "text-yellow-25"
-                                                : "text-richblack-25"
+                                            className={`group relative flex cursor-pointer items-center gap-1 ${matchRoute("/catalog/:catalogName") ? "text-yellow-300" : "text-[#DBDDEA]"
                                                 }`}
                                         >
                                             <p>{link.title}</p>
                                             <BsChevronDown />
-                                            <div className="invisible absolute left-[50%] top-[50%] z-[1000] flex w-[200px] translate-x-[-50%] translate-y-[3em] flex-col rounded-lg bg-richblack-5 p-4 text-richblack-900 opacity-0 transition-all duration-150 group-hover:visible group-hover:translate-y-[1.65em] group-hover:opacity-100 lg:w-[300px]">
-                                                <div className="absolute left-[50%] top-0 -z-10 h-6 w-6 translate-x-[80%] translate-y-[-40%] rotate-45 select-none rounded bg-richblack-5"></div>
+
+                                            {/* Dropdown Menu */}
+                                            <div className="invisible absolute left-[50%] top-[100%] z-[1000] flex w-[200px] 
+                                -translate-x-[50%] translate-y-2 flex-col rounded-lg bg-white p-4 text-black 
+                                opacity-0 shadow-lg transition-all duration-150 group-hover:visible 
+                                group-hover:translate-y-3 group-hover:opacity-100 lg:w-[300px]">
+
+                                                {/* Small Half Rectangle / Arrow */}
+                                                <div className="absolute left-[50%] top-0 h-4 w-4 -translate-x-[50%] -translate-y-[50%] rotate-45 bg-white"></div>
+
+                                                {/* Dropdown Content */}
                                                 {loading ? (
                                                     <p className="text-center">Loading...</p>
-                                                ) : (subLinks && subLinks.length) ? (
-                                                    <>
-                                                        {subLinks
-                                                            ?.filter(
-                                                                (subLink) => subLink?.courses?.length > 0
-                                                            )
-                                                            ?.map((subLink, i) => (
-                                                                <Link
-                                                                    to={`/catalog/${subLink.name
-                                                                        .split(" ")
-                                                                        .join("-")
-                                                                        .toLowerCase()}`}
-                                                                    className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50"
-                                                                    key={i}
-                                                                >
-                                                                    <p>{subLink.name}</p>
-                                                                </Link>
-                                                            ))}
-                                                    </>
+                                                ) : subLinks && subLinks.length ? (
+                                                    subLinks
+                                                        .filter((subLink) => subLink?.courses?.length > 0)
+                                                        .map((subLink, i) => (
+                                                            <Link
+                                                                to={`/catalog/${subLink.name.split(" ").join("-").toLowerCase()}`}
+                                                                className="rounded-lg py-1 pl-1 text-black hover:bg-gray-300 hover:text-black"
+                                                                key={i}
+                                                            >
+                                                                <p>{subLink.name}</p>
+                                                            </Link>
+                                                        ))
                                                 ) : (
                                                     <p className="text-center">No Courses Found</p>
                                                 )}
@@ -95,9 +95,7 @@ function Navbar() {
                                 ) : (
                                     <Link to={link?.path}>
                                         <p
-                                            className={`${matchRoute(link?.path)
-                                                ? "text-yellow-25"
-                                                : "text-richblack-25"
+                                            className={`${matchRoute(link?.path) ? "text-yellow-300" : "text-[#DBDDEA]"
                                                 }`}
                                         >
                                             {link.title}
@@ -108,13 +106,14 @@ function Navbar() {
                         ))}
                     </ul>
                 </nav>
+
                 {/* Login / Signup / Dashboard */}
                 <div className="hidden items-center gap-x-4 md:flex">
                     {user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
                         <Link to="/dashboard/cart" className="relative">
                             <AiOutlineShoppingCart className="text-2xl text-richblack-100" />
                             {totalItems > 0 && (
-                                <span className="absolute -bottom-2 -right-2 grid h-5 w-5 place-items-center overflow-hidden rounded-full bg-richblack-600 text-center text-xs font-bold text-yellow-100">
+                                <span className="absolute -bottom-2 -right-2 grid h-5 w-5 place-items-center overflow-hidden rounded-full bg-[#424854] text-center text-xs font-bold text-yellow-300">
                                     {totalItems}
                                 </span>
                             )}
@@ -122,14 +121,14 @@ function Navbar() {
                     )}
                     {token === null && (
                         <Link to="/login">
-                            <button className="rounded-[8px] border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100">
+                            <button className="rounded-[8px] border border-[#2C333F] bg-[#161D29] px-[12px] py-[8px] text-[#AFB2BF]">
                                 Log in
                             </button>
                         </Link>
                     )}
                     {token === null && (
                         <Link to="/signup">
-                            <button className="rounded-[8px] border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100">
+                            <button className="rounded-[8px] border border-[#2C333F] bg-[#161D29] px-[12px] py-[8px] text-[#AFB2BF]">
                                 Sign up
                             </button>
                         </Link>

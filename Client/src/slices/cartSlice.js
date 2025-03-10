@@ -2,10 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 
 const initialiseState = {
-  totalItems: localStorage.getItem("cart")
-    ? JSON.parse(localStorage.getItem("cart")).length
+  totalItems: localStorage.getItem("totalItems")
+    ? JSON.parse(localStorage.getItem("totalItems"))
     : 0,
-  items: localStorage.getItem("cart")
+
+  total: localStorage.getItem("total")
+    ? JSON.parse(localStorage.getItem("total"))
+    : 0,
+
+  cart: localStorage.getItem("cart")
     ? JSON.parse(localStorage.getItem("cart"))
     : [],
 };
@@ -17,29 +22,54 @@ export const cartSlice = createSlice({
     setTotalItems: (state, action) => {
       state.totalItems = action.payload;
     },
+
     addToCart: (state, action) => {
-      state.items.push(action.payload);
-      state.totalItems += 1;
-      localStorage.setItem("cart", JSON.stringify(state.items));
-      toast.success(`${action.payload.name} added to cart`);
+      const course = action.payload;
+      const index = state.cart.findIndex((item) => item._id === course._id);
+
+      if (index >= 0) {
+        toast.error("Course already in cart");
+        return;
+      }
+      state.cart.push(course);
+      state.totalItems++;
+      state.total += course.price;
+
+      localStorage.setItem("cart", JSON.stringify(state.cart));
+      localStorage.setItem("total", JSON.stringify(state.total));
+      localStorage.setItem("totalItems", JSON.stringify(state.totalItems));
+
+      toast.success("Course added to cart");
     },
+
     removeFromCart: (state, action) => {
-      state.items = state.items.filter((item) => item.id !== action.payload.id);
-      state.totalItems -= 1;
-      localStorage.setItem("cart", JSON.stringify(state.items));
-      const removedItem = state.items.find(
-        (item) => item.id === action.payload.id
-      );
-      toast.success(`${removedItem.name} removed from cart`);
+      const courseId = action.payload;
+      const index = state.cart.findIndex((item) => item._id === courseId);
+
+      if (index >= 0) {
+        state.totalItems--;
+        state.total -= state.cart[index].price;
+        state.cart.splice(index, 1);
+
+        localStorage.setItem("cart", JSON.stringify(state.cart));
+        localStorage.setItem("total", JSON.stringify(state.total));
+        localStorage.setItem("totalItems", JSON.stringify(state.totalItems));
+
+        toast.success("Course removed from cart");
+      }
     },
-    clearCart: (state) => {
-      state.items = [];
+
+    resetCart: (state) => {
+      state.cart = [];
+      state.total = 0;
       state.totalItems = 0;
+
       localStorage.removeItem("cart");
-      toast.success("Cart cleared");
+      localStorage.removeItem("total");
+      localStorage.removeItem("totalItems");
     },
   },
 });
-export const { setTotalItems, addToCart, removeFromCart, clearCart } =
+export const { setTotalItems, addToCart, removeFromCart, resetCart } =
   cartSlice.actions;
 export default cartSlice.reducer;

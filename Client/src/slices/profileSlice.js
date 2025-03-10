@@ -4,7 +4,7 @@ const initialState = {
   user: null,
 };
 
-export const profileSlice = createSlice({
+const profileSlice = createSlice({
   name: "profile",
   initialState: initialState,
   reducers: {
