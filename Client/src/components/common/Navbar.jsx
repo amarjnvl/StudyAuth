@@ -128,7 +128,7 @@ function Navbar() {
                                     Log In
                                 </button>
                             </Link>
-                            <Link to={"/sign-up"}>
+                            <Link to={"/signup"}>
                                 <button className="px-4 py-2 bg-[#037957] text-[#fff] rounded-md hover:bg-[#026144] transition">
                                     Sign Up
                                 </button>
