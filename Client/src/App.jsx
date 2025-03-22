@@ -5,6 +5,9 @@ import Navbar from './Components/Common/Navbar'
 import Login from './pages/Login'
 import { useState } from 'react'
 import Signup from './pages/SignUp'
+import OpenRoute from "./components/Core/Auth/OpenRoute"
+import ForgotPassword from "./pages/ForgotPassword"
+import UpdatePassword from './pages/UpdatePassword'
 
 function App() {
 
@@ -15,8 +18,10 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path="/signup" element={<Signup setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/login" element={<OpenRoute> <Login /> </OpenRoute>} />
+        <Route path="/signup" element={<OpenRoute> <Signup /> </OpenRoute>} />
+        <Route path="/forgot-password" element={<OpenRoute> <ForgotPassword /> </OpenRoute>} />
+        <Route path="/update-password/:id" element={<OpenRoute> <UpdatePassword /> </OpenRoute>} />
       </Routes>
     </div>
   )

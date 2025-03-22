@@ -131,8 +131,15 @@ export function logout(navigate) {
 }
 
 export function getPasswordResetToken(email, setEmailSent) {
+  // The outer function is returned from getPasswordResetToken, and it takes a single argument, dispatch.
+  // The inner function is the one that is passed to useDispatch, and it takes no arguments.
+  // The reason we do it this way is so that we can call the inner function with no arguments, and it will have access to the dispatch function.
+  // This is a common pattern when using Redux's useDispatch hook.
   return async (dispatch) => {
+    // Dispatching an action to update the loading state in the global store
     dispatch(setLoading(true));
+    // If you do not use dispatch, the loading state will not be updated in the global store
+    // This means that any components relying on this state will not reflect the loading status
     try {
       const response = await apiConnector("POST", RESETPASSTOKEN_API, {
         email,
@@ -172,7 +179,7 @@ export function resetPassword(password, confirmPassword, token) {
 
       toast.success("Password has been reset successfully");
     } catch (error) {
-      console.log("RESET PASSWORD TOKEN Error", error);
+      console.log("RESET PASSWORD ERROR", error);
       toast.error("Unable to reset password");
     }
     dispatch(setLoading(false));
