@@ -1,6 +1,5 @@
 const BASE_URL =
   import.meta.env.VITE_REACT_APP_BASE_URL || "http://localhost:4000/api/v1";
-// console.log("Base URL:", BASE_URL);
 
 // AUTH ENDPOINTS
 export const endpoints = {

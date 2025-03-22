@@ -32,7 +32,7 @@ export function sendOtp(email, navigate) {
       }
 
       toast.success("OTP Sent Successfully");
-      navigate("/verify-email");
+      navigate("/verify-email"); // This line navigates to /verify-email
     } catch (error) {
       console.log("SENDOTP API ERROR............", error);
       toast.error("Could Not Send OTP");
@@ -160,7 +160,6 @@ export function getPasswordResetToken(email, setEmailSent) {
     dispatch(setLoading(false));
   };
 }
-
 export function resetPassword(password, confirmPassword, token) {
   return async (dispatch) => {
     dispatch(setLoading(true));
@@ -178,6 +177,7 @@ export function resetPassword(password, confirmPassword, token) {
       }
 
       toast.success("Password has been reset successfully");
+      navigate("/login");
     } catch (error) {
       console.log("RESET PASSWORD ERROR", error);
       toast.error("Unable to reset password");
