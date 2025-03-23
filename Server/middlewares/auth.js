@@ -63,6 +63,9 @@ exports.isAdmin = async (req, res, next) => {
   try {
     const userDetails = await User.findOne({ email: req.user.email });
 
+    // Log the account type for debugging
+    console.log(`User account type: ${userDetails.accountType}`);
+
     if (userDetails.accountType !== "Admin") {
       return res.status(401).json({
         success: false,

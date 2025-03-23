@@ -10,6 +10,7 @@ import { apiConnector } from "../../services/apiconnector"
 import { categories } from "../../Services/apis"
 import { ACCOUNT_TYPE } from "../../utils/constants"
 import { logout } from "../../services/operations/authAPI"
+import ProfileDropdown from "../Core/Auth/ProfileDropDown";
 
 function Navbar() {
     const { token } = useSelector((state) => state.auth)
@@ -135,12 +136,7 @@ function Navbar() {
                             </Link>
                         </div>
                     ) : (
-                        <button
-                            onClick={() => dispatch(logout())}
-                            className="px-4 py-2 bg-red-600 text-[#fff] rounded-md hover:bg-red-700 transition"
-                        >
-                            Logout
-                        </button>
+                        <ProfileDropdown />
                     )}
                 </div>
                 <button className="mr-4 md:hidden">
