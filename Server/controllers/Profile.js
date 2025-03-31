@@ -100,17 +100,13 @@ exports.getAllUserDetails = async (req, res) => {
     const userDetails = await User.findById(id)
       .populate("additionalDetails")
       .exec();
-    console.log(userDetails);
     res.status(200).json({
       success: true,
       message: "User Data fetched successfully",
-      data: userDetails,
+      data: userDetails, // Ensure user data is returned
     });
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 

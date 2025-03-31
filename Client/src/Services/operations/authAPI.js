@@ -107,7 +107,7 @@ export function login(email, password, navigate) {
       dispatch(setUser({ ...response.data.user, image: userImage }));
 
       localStorage.setItem("token", JSON.stringify(response.data.token));
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+      localStorage.setItem("user", JSON.stringify(response.data.user)); // Important: This line is used to store the user data in local storage, which can be useful for persisting user information across sessions. If not unser will be received as null on refreshing the page
       navigate("/dashboard/my-profile");
     } catch (error) {
       console.log("LOGIN API ERROR............", error);

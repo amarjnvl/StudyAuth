@@ -14,7 +14,7 @@ import Footer from "../components/common/Footer";
 const About = () => {
     return (
         <div>
-            <div className="px-6 md:px-12 lg:px-24 py-12 bg-black">
+            <div className="px-6 md:px-12 lg:px-24 py-12 bg-white">
 
                 {/* Section 1 */}
                 <section className="text-center">
