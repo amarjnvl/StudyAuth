@@ -6,24 +6,24 @@ const IconBtn = ({
     children,
     disabled,
     outline = false,
-    customClasses,
-    type,
+    customClasses = "",
+    type = "button",
 }) => {
     return (
         <button
             onClick={onClick}
             disabled={disabled}
             type={type}
-            // className={customClasses}
+            className={`flex items-center justify-center gap-2 rounded-md px-5 py-2 
+                text-lg font-medium transition-all duration-300 
+                ${outline
+                    ? "border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white"
+                    : "bg-blue-500 text-white hover:bg-blue-600"} 
+                ${disabled ? "opacity-50 cursor-not-allowed" : ""} 
+                ${customClasses}`}
         >
-            {children ? (
-                <>
-                    <span>{text}</span>
-                    {children}
-                </>
-            ) : (
-                <span>{text}</span>
-            )}
+            <span>{text}</span>
+            {children}
         </button>
     );
 };

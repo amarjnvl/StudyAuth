@@ -15,19 +15,24 @@ const SidebarLink = ({ link, iconName }) => {
     return (
         <NavLink
             to={link?.path || "#"}
-            className={`${matchRoute(link?.path) ? "bg-[#2C333F] text-[#C5C7D4] opacity-100" : "opacity-50"}`}
+            className={`relative flex items-center gap-3 px-4 py-2 rounded-md transition-all
+                ${matchRoute(link?.path) ? "bg-gray-800 text-white font-medium shadow-lg" : "text-gray-400 hover:text-white hover:bg-gray-700"}
+            `}
         >
+            {/* Active Indicator Bar */}
             <span
-                className={` absolute bg-yellow-300 ${matchRoute(link?.path) ? "opacity-100" : "opacity-50"}`}
-            >
-            </span>
+                className={`absolute left-0 h-full w-1 rounded-r-md bg-yellow-400 transition-all
+                    ${matchRoute(link?.path) ? "opacity-100" : "opacity-0"}
+                `}
+            ></span>
 
-            <div>
-                {Icon && <Icon />}
-                <span>{link?.name || "Unnamed Link"}</span>
+            {/* Icon & Text */}
+            <div className="flex items-center gap-2">
+                {Icon && <Icon className="text-lg" />}
+                <span className="text-sm">{link?.name || "Unnamed Link"}</span>
             </div>
         </NavLink>
-    )
-}
+    );
+};
 
-export default SidebarLink
+export default SidebarLink;
