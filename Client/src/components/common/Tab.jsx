@@ -1,21 +1,16 @@
 export default function Tab({ tabData, field, setField }) {
     return (
-        <div
-            style={{
-                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-            }}
-            className="flex bg-[#161D29] p-1 gap-x-1 my-6 rounded-full max-w-max"
-        >
+        <div className="flex justify-center gap-4">
             {tabData.map((tab) => (
                 <button
                     key={tab.id}
                     onClick={() => setField(tab.type)}
-                    className={`${field === tab.type
-                        ? "bg-[#000814] text-[#F1F2FF]"
-                        : "bg-transparent text-[#999DAA]"
-                        } py-2 px-5 rounded-full transition-all duration-200`}
+                    className={`px-6 py-2 rounded-full font-medium transition-all duration-200 ${field === tab.type
+                            ? "bg-blue-600 text-white shadow-md"
+                            : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                        }`}
                 >
-                    {tab?.tabName}
+                    {tab.tabName}
                 </button>
             ))}
         </div>

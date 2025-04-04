@@ -9,6 +9,7 @@ function Signup() {
             description2="Education to future-proof your career."
             image={signupImg}
             formType="signup"
+        // className="w-full max-w-4xl bg-white p-8 rounded-lg shadow-lg flex flex-col md:flex-row items-center gap-10"
         />
     )
 }

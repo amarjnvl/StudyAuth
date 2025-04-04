@@ -22,7 +22,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
-    <div className='w-screen min-h-screen bg-[#000814] flex flex-col font-[inter]'>
+    <div className='w-screen min-h-screen bg-white flex flex-col font-[inter]'>
       <Navbar />
       <Routes>
         <Route path="*" element={<ErrorPage />} />

@@ -82,128 +82,96 @@ function SignupForm() {
     ]
 
     return (
-        <div>
-            {/* Tab */}
-            <Tab tabData={tabData} field={accountType} setField={setAccountType} />
+        <div className="mt-8 flex flex-col w-full max-w-lg mx-auto bg-white shadow-lg rounded-xl p-6">
+            {/* Tab Section */}
+            <div className="flex justify-center gap-4 mb-6">
+                {tabData.map((tab) => (
+                    <button
+                        key={tab.id}
+                        onClick={() => setAccountType(tab.type)}
+                        className={`px-10 py-2 rounded-full font-medium transition-all duration-200 ${accountType === tab.type
+                            ? "bg-blue-600 text-white shadow-md"
+                            : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                            }`}
+                    >
+                        {tab.tabName}
+                    </button>
+                ))}
+            </div>
+
             {/* Form */}
-            <form onSubmit={handleOnSubmit} className="flex w-full flex-col gap-y-4">
-                <div className="flex gap-x-4">
-                    <label>
-                        <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-[#F1F2FF]">
-                            First Name <sup className="text-pink-200">*</sup>
-                        </p>
-                        <input
-                            required
-                            type="text"
-                            name="firstName"
-                            value={firstName}
-                            onChange={handleOnChange}
-                            placeholder="Enter first name"
-                            style={{
-                                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-                            }}
-                            className="w-full rounded-[0.5rem] bg-[#161D29] p-[12px] text-[#F1F2FF]"
-                        />
-                    </label>
-                    <label>
-                        <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-[#F1F2FF]">
-                            Last Name <sup className="text-pink-200">*</sup>
-                        </p>
-                        <input
-                            required
-                            type="text"
-                            name="lastName"
-                            value={lastName}
-                            onChange={handleOnChange}
-                            placeholder="Enter last name"
-                            style={{
-                                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-                            }}
-                            className="w-full rounded-[0.5rem] bg-[#161D29] p-[12px] text-[#F1F2FF]"
-                        />
-                    </label>
+            <form onSubmit={handleOnSubmit} className="flex flex-col gap-y-5">
+                {/* Name Fields */}
+                <div className="flex gap-4">
+                    {["firstName", "lastName"].map((field) => (
+                        <label key={field} className="w-full">
+                            <p className="mb-1 text-sm font-medium text-gray-700">
+                                {field === "firstName" ? "First Name" : "Last Name"} <sup className="text-red-500">*</sup>
+                            </p>
+                            <input
+                                required
+                                type="text"
+                                name={field}
+                                value={formData[field]}
+                                onChange={handleOnChange}
+                                placeholder={`Enter ${field === "firstName" ? "first" : "last"} name`}
+                                className="w-full rounded-md border border-gray-300 p-3 text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                            />
+                        </label>
+                    ))}
                 </div>
+
+                {/* Email Field */}
                 <label className="w-full">
-                    <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-[#F1F2FF]">
-                        Email Address <sup className="text-pink-200">*</sup>
+                    <p className="mb-1 text-sm font-medium text-gray-700">
+                        Email Address <sup className="text-red-500">*</sup>
                     </p>
                     <input
                         required
-                        type="text"
+                        type="email"
                         name="email"
-                        value={email}
+                        value={formData.email}
                         onChange={handleOnChange}
                         placeholder="Enter email address"
-                        style={{
-                            boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-                        }}
-                        className="w-full rounded-[0.5rem] bg-[#161D29] p-[12px] text-[#F1F2FF]"
+                        className="w-full rounded-md border border-gray-300 p-3 text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                     />
                 </label>
-                <div className="flex gap-x-4">
-                    <label className="relative">
-                        <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-[#F1F2FF]">
-                            Create Password <sup className="text-pink-200">*</sup>
+
+                {/* Password Fields */}
+                {[{ name: "password", label: "Create Password", state: showPassword, setState: setShowPassword },
+                { name: "confirmPassword", label: "Confirm Password", state: showConfirmPassword, setState: setShowConfirmPassword }].map(({ name, label, state, setState }) => (
+                    <label key={name} className="relative w-full">
+                        <p className="mb-1 text-sm font-medium text-gray-700">
+                            {label} <sup className="text-red-500">*</sup>
                         </p>
                         <input
                             required
-                            type={showPassword ? "text" : "password"}
-                            name="password"
-                            value={password}
+                            type={state ? "text" : "password"}
+                            name={name}
+                            value={formData[name]}
                             onChange={handleOnChange}
-                            placeholder="Enter Password"
-                            style={{
-                                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-                            }}
-                            className="w-full rounded-[0.5rem] bg-[#161D29] p-[12px] pr-10 text-[#F1F2FF]"
+                            placeholder={label}
+                            className="w-full rounded-md border border-gray-300 p-3 text-gray-900 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                         />
                         <span
-                            onClick={() => setShowPassword((prev) => !prev)}
-                            className="absolute right-3 top-[38px] z-[10] cursor-pointer"
+                            onClick={() => setState((prev) => !prev)}
+                            className="absolute right-3 top-10 p-2 cursor-pointer text-gray-500 hover:text-gray-700"
                         >
-                            {showPassword ? (
-                                <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
-                            ) : (
-                                <AiOutlineEye fontSize={24} fill="#AFB2BF" />
-                            )}
+                            {state ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
                         </span>
                     </label>
-                    <label className="relative">
-                        <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-[#F1F2FF]">
-                            Confirm Password <sup className="text-pink-200">*</sup>
-                        </p>
-                        <input
-                            required
-                            type={showConfirmPassword ? "text" : "password"}
-                            name="confirmPassword"
-                            value={confirmPassword}
-                            onChange={handleOnChange}
-                            placeholder="Confirm Password"
-                            style={{
-                                boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
-                            }}
-                            className="w-full rounded-[0.5rem] bg-[#161D29] p-[12px] pr-10 text-[#F1F2FF]"
-                        />
-                        <span
-                            onClick={() => setShowConfirmPassword((prev) => !prev)}
-                            className="absolute right-3 top-[38px] z-[10] cursor-pointer"
-                        >
-                            {showConfirmPassword ? (
-                                <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
-                            ) : (
-                                <AiOutlineEye fontSize={24} fill="#AFB2BF" />
-                            )}
-                        </span>
-                    </label>
-                </div>
+                ))}
+
+                {/* Submit Button */}
                 <button
                     type="submit"
-                    className="mt-6 rounded-[8px] bg-yellow-50 py-[8px] px-[12px] font-medium text-[#000814]"
+                    className="mt-3 w-full rounded-md bg-blue-600 py-3 text-white font-semibold tracking-wide shadow-md hover:bg-blue-700 transition-all"
                 >
                     Create Account
                 </button>
             </form>
         </div>
+
     )
 }
 
