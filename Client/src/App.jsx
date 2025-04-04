@@ -1,5 +1,5 @@
 import './App.css'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import Home from './pages/Home'
 import Navbar from './Components/Common/Navbar'
 import Login from './pages/Login'
@@ -15,11 +15,14 @@ import Contact from './pages/Contact'
 import ErrorPage from './pages/Error'
 import MyProfile from './components/Core/Dashboard/MyProfile'
 import Dashboard from './pages/Dashboard'
-
+import EnrolledCourses from './components/Core/Dashboard/EnrolledCourses'
+import { ACCOUNT_TYPE } from './utils/constants'
+import { useSelector } from 'react-redux'
+import Cart from './components/Core/Dashboard/Cart/index'
 
 function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const user = useSelector((state) => state.auth)
 
   return (
     <div className='w-screen min-h-screen bg-white flex flex-col font-[inter]'>
@@ -37,10 +40,16 @@ function App() {
 
         <Route element={<PrivateRoute> <Dashboard /> </PrivateRoute>}>
           <Route path="/dashboard/my-profile" element={<MyProfile />} />
+          <Route path="/dashboard/enrolled-courses" element={<EnrolledCourses />} />
+          <Route path="/dashboard/cart" element={<Cart />} />
+
+          {/* <Route path="/dashboard/cart" element={user?.accountType === ACCOUNT_TYPE.STUDENT && <Cart />} /> */}
         </Route>
 
       </Routes>
     </div>
   )
 }
+
 export default App
+

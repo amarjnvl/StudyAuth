@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { VscSignOut } from "react-icons/vsc";
 import SidebarLink from "./SidebarLink";
@@ -12,11 +12,18 @@ function Sidebar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { user } = useSelector((state) => state.profile)
+  const filteredLinks = sidebarLinks.filter((link) => {
+    if (!link.type)
+      return 1
+    return link.type === user.accountType
+  })
+
   return (
     <div className="flex flex-col h-screen bg-gray-900 text-white w-64 shadow-lg">
       {/* Sidebar Links */}
       <div className="flex-grow overflow-y-auto space-y-2 p-4">
-        {sidebarLinks.map((link) => (
+        {filteredLinks.map((link) => (
           <SidebarLink key={link.id} link={link} />
         ))}
       </div>
